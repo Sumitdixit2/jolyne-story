@@ -1,0 +1,344 @@
+/* engine.css - Styles for the retro RPG engine components */
+
+.engine-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10; /* Above grain overlay */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: none; /* Let clicks pass through if needed, though we trap them in components */
+}
+
+/* --- Dialog Box --- */
+.dialog-container {
+  position: relative;
+  width: 100%;
+  height: 30%;
+  padding: 2rem 3rem;
+  padding-bottom: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  pointer-events: auto;
+}
+
+.dialog-box {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  background-color: var(--dialog-bg);
+  border: 3px solid var(--dialog-border);
+  border-radius: 8px;
+  box-shadow: inset 0 0 10px rgba(13, 13, 13, 0.1), 0 10px 30px rgba(0,0,0,0.5);
+  padding: 2rem;
+  color: var(--dialog-text);
+  font-family: var(--font-dialog);
+  font-size: 1.75rem;
+  line-height: 1.4;
+  cursor: pointer; /* Indicates it can be clicked to advance */
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+}
+
+.dialog-name-tab {
+  position: absolute;
+  top: -20px;
+  left: 40px;
+  background-color: var(--dialog-name-tab);
+  color: var(--dialog-name-text);
+  padding: 0.25rem 1.5rem;
+  border: 3px solid var(--dialog-border);
+  border-radius: 4px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.dialog-text {
+  flex-grow: 1;
+}
+
+.dialog-cursor {
+  position: absolute;
+  bottom: 1rem;
+  right: 1.5rem;
+  font-size: 1.5rem;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* --- Character Portrait --- */
+.character-portrait {
+  position: absolute;
+  bottom: 10%;
+  left: max(5%, calc(50% - 600px - 2rem)); /* Align with left edge of max-width dialog box roughly */
+  width: 120px;
+  height: 120px;
+  border: 3px solid var(--dialog-border);
+  border-radius: 8px;
+  background-color: var(--color-ink);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  z-index: 30; /* Overlap dialog box */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.portrait-placeholder {
+  font-size: 4rem;
+  font-family: var(--font-serif);
+  color: var(--color-cream);
+  font-weight: 700;
+}
+
+.portrait-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Choice Menu --- */
+.choice-menu {
+  position: absolute;
+  bottom: calc(30% + 1rem); /* Just above the dialog box */
+  right: max(5%, calc(50% - 600px)); /* Align with right edge of dialog box */
+  background-color: var(--dialog-bg);
+  border: 3px solid var(--dialog-border);
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  min-width: 300px;
+  box-shadow: inset 0 0 10px rgba(13, 13, 13, 0.1), 0 10px 30px rgba(0,0,0,0.5);
+  z-index: 40;
+  pointer-events: auto;
+}
+
+.choice-item {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-dialog);
+  font-size: 1.5rem;
+  color: var(--dialog-text);
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.choice-item:last-child {
+  margin-bottom: 0;
+}
+
+.choice-cursor {
+  width: 20px;
+  margin-right: 10px;
+  opacity: 0;
+}
+
+.choice-item.active .choice-cursor {
+  opacity: 1;
+  color: var(--active-color, var(--color-ch1-accent)); /* Default to Ch1 color if none provided */
+}
+
+/* --- Game Over --- */
+.game-over-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 10, 10, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  pointer-events: auto;
+  opacity: 0;
+}
+
+.game-over-title {
+  font-family: var(--font-serif);
+  font-size: 7rem;
+  color: var(--color-cream);
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+}
+
+.game-over-message {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--color-cream-dark);
+  max-width: 600px;
+  text-align: center;
+  margin-bottom: 4rem;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.game-over-retry {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--color-cream);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.game-over-retry:hover {
+  transform: scale(1.05);
+}
+
+.game-over-retry .choice-cursor {
+  opacity: 1;
+  color: var(--color-ch1-accent); /* Standard color for retry */
+}
+
+/* --- Chapter Loader --- */
+.chapter-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 90;
+  pointer-events: none; /* Usually just displaying */
+}
+
+.chapter-loader-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4; /* Dim background art */
+  z-index: 1;
+}
+
+.chapter-loader-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chapter-loader-title {
+  font-family: var(--font-serif);
+  font-size: 4rem;
+  color: var(--color-cream);
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.chapter-loader-subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--color-cream-dark);
+  font-style: italic;
+  margin-bottom: 3rem;
+}
+
+.chapter-loader-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(245, 240, 232, 0.2);
+  border-top-color: var(--color-cream);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Ora Ora Bar --- */
+.ora-ora-container {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 800px;
+  height: 18px;
+  background-color: rgba(13, 13, 13, 0.5);
+  border: 2px solid var(--color-cream);
+  border-radius: 9px;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.ora-ora-fill {
+  height: 100%;
+  width: 0%; /* Dynamic */
+  background-color: var(--color-ch5-accent);
+  transition: width 0.1s linear, background-color 0.2s;
+}
+
+.ora-ora-fill.danger {
+  background-color: #FFD700; /* Gold pulse */
+}
+
+.ora-ora-text {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--color-cream);
+  font-style: italic;
+  letter-spacing: 0.1em;
+}
+
+.ora-ora-hit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-serif);
+  font-size: 10rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+  z-index: 45;
+  opacity: 0;
+}
+
+/* Background Scene Image */
+.scene-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.scene-bg-color {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}

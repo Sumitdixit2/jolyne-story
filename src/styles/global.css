@@ -12,6 +12,21 @@
   --font-jp: 'Shippori Mincho', serif;
   
   --grain-opacity: 0.04;
+
+  /* Chapter Accent Colors */
+  --color-ch1-accent: #39FF14;   /* Stone Free — neon green */
+  --color-ch2-accent: #E8C56D;   /* The Visitor — pale gold */
+  --color-ch3-accent: #7B2FFF;   /* Green Baby — deep violet */
+  --color-ch4-accent: #FF4D4D;   /* Heavy Weather — warning red */
+  --color-ch5-accent: #00FFFF;   /* Made in Heaven — cyan */
+
+  /* Dialog System */
+  --dialog-bg: #F5F0E8;
+  --dialog-border: #0D0D0D;
+  --dialog-text: #0D0D0D;
+  --dialog-name-tab: #0D0D0D;
+  --dialog-name-text: #F5F0E8;
+  --font-dialog: 'Cormorant Garamond', serif;
 }
 
 * {
@@ -26,7 +41,7 @@ html, body {
   background-color: var(--color-ink); /* Default to dark as per entry screen */
   color: var(--color-cream);
   font-family: var(--font-serif);
-  overflow-x: hidden;
+  overflow: hidden; /* Scroll lock for M0 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
